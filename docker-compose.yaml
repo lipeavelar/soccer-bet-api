@@ -1,0 +1,12 @@
+version: '3.8'
+services:
+  soccer-bet-api:
+    container_name: soccer-bet-api
+    build:
+      context: .
+      target: dev
+    volumes:
+    - .:/app:rw,delegated
+    ports:
+    - 8000:8080
+    - 2345:2345
