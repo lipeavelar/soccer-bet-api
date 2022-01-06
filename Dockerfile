@@ -12,12 +12,12 @@ RUN apk update \
   git \
   && update-ca-certificates
 
-
 ###
 
 FROM base AS dev
 
 WORKDIR /app
+
 
 RUN go get -u github.com/cosmtrek/air \
   && go install github.com/go-delve/delve/cmd/dlv@latest

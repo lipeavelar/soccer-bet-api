@@ -1,13 +1,16 @@
 package main
 
 import (
-	"fmt"
-	"time"
+	"os"
+
+	"github.com/lipeavelar/soccer-bet-api/internal/api"
+
+	"github.com/gin-gonic/gin"
 )
 
 func main() {
-	for true {
-		fmt.Println("Hello, World!")
-		time.Sleep(10 * time.Second)
-	}
+	port := os.Getenv("API_PORT")
+	engine := gin.Default()
+	api.SetupRoutes(engine)
+	engine.Run(":" + port)
 }

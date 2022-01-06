@@ -5,8 +5,16 @@ services:
     build:
       context: .
       target: dev
+    environment:
+      - API_PORT=${API_PORT}
     volumes:
     - .:/app:rw,delegated
     ports:
-    - 8000:8080
+    - 8000:${API_PORT}
     - 2345:2345
+    networks:
+      - database
+
+networks:
+  database:
+    driver: bridge
