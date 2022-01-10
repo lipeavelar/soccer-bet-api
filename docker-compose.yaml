@@ -1,5 +1,18 @@
 version: '3.8'
 services:
+  db:
+    image: postgres:14
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASS}
+    volumes:
+      - ./db/scripts:/scripts
+      - ./db/scripts/init.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - ${DB_PORT}:5432
+    networks:
+      - database
+
   soccer-bet-api:
     container_name: soccer-bet-api
     build:
@@ -14,6 +27,8 @@ services:
     - 2345:2345
     networks:
       - database
+    depends_on:
+      - db
 
 networks:
   database:
