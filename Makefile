@@ -17,6 +17,15 @@ migrate-status: ## Run migrations with goose (need to install goose first)
 	@echo "Migrating from old Makefile to new Makefile"
 	goose -dir ./db/migrations/ postgres 'host=localhost port=$(DB_PORT) user=$(DB_USER) password=$(DB_PASS) dbname=$(DB_NAME) sslmode=disable' status
 
-.PHONY: run-api
-run-api: ## Run API server and database
+.PHONY: create-migration
+create-migration: ## create migration with goose (need to install goose first), usage: make create-migration SBM_NAME="migratrion_name"
+	@echo "Creating migration"
+ifeq ($(origin SBM_NAME),undefined)
+	@echo "Migration name is required, check usage with 'make help'"
+	exit 1
+endif
+	goose -dir=./db/migrations/ create $(SBM_NAME) sql
+
+.PHONY: run
+run: ## Run API server and database
 	docker-compose up -d
