@@ -14,3 +14,7 @@ bin = "/tmp/main"
 full_bin = "dlv exec --accept-multiclient --log --headless --continue --listen :2345 --api-version 2 /tmp/main"
 # Watch these filename extensions.
 include_ext = ["go"]
+
+[misc]
+ # Delete the tmp directory when exiting
+clean_on_exit = true

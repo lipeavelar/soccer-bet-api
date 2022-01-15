@@ -13,8 +13,8 @@ type User struct {
 	Name           string `json:"name"`
 	Email          string `json:"email"`
 	Password       string `json:"-"`
-	PlainPassword  string `json:"password"`
-	IsAdmin        bool
+	PlainPassword  string `json:"password" gorm:"-"`
+	IsAdmin        bool   `json:"isAdmin"`
 	ChangePassword bool
 	CreatedAt      time.Time
 	UpdatedAt      time.Time
