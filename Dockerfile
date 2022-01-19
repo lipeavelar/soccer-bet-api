@@ -19,7 +19,7 @@ FROM base AS dev
 WORKDIR /app
 
 
-RUN go get -u github.com/cosmtrek/air \
+RUN go install github.com/cosmtrek/air@latest \
   && go install github.com/go-delve/delve/cmd/dlv@latest
 
 EXPOSE 8080

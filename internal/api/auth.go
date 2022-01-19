@@ -11,7 +11,7 @@ import (
 	"github.com/lipeavelar/soccer-bet-api/pkg/models"
 )
 
-func register(context *gin.Context) {
+func registerUser(context *gin.Context) {
 	var user models.User
 
 	if err := context.BindJSON(&user); err != nil {

@@ -8,5 +8,5 @@ func SetupRoutes(engine *gin.Engine) {
 }
 
 func setupAuthRoutes(authGroup *gin.RouterGroup) {
-	authGroup.POST("/register", register)
+	authGroup.POST("/register", registerUser)
 }
