@@ -1,6 +1,6 @@
 
 -- +goose Up
-CREATE TABLE users (
+CREATE TABLE IF NOT EXISTS users (
     id                VARCHAR(100) NOT NULL UNIQUE,
     name              VARCHAR(120) NOT NULL,
     email             VARCHAR(200) NOT NULL UNIQUE,
@@ -13,4 +13,4 @@ CREATE TABLE users (
 );
 
 -- +goose Down
-DROP TABLE users;
+DROP TABLE IF EXISTS users;
