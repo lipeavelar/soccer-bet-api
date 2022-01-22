@@ -29,3 +29,22 @@ func registerUser(context *gin.Context) {
 	}
 	context.JSON(http.StatusOK, createdUser)
 }
+
+func login(context *gin.Context) {
+	var user models.User
+
+	if err := context.BindJSON(&user); err != nil {
+		context.JSON(http.StatusBadRequest, helpers.GenerateError(errors.New("invalid json")))
+	}
+
+	repo, err := authrepo.NewUserRepo()
+	if err != nil {
+		context.JSON(http.StatusInternalServerError, helpers.GenerateError(errors.New("internal server error")))
+	}
+	userService := authsrv.NewAuthService(repo)
+	token, err := userService.CreateSession(user)
+	if err != nil {
+		context.JSON(http.StatusInternalServerError, helpers.GenerateError(errors.New("internal server error")))
+	}
+	context.JSON(http.StatusOK, token)
+}

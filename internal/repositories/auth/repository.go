@@ -11,4 +11,6 @@ type userRepository struct {
 
 type UserRepo interface {
 	CreateUser(user models.User) (models.User, error)
+	GetUserByEmail(email string) (models.User, error)
+	GetUserByID(id string) (models.User, error)
 }

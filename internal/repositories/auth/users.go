@@ -21,3 +21,17 @@ func (repo *userRepository) CreateUser(user models.User) (models.User, error) {
 	results := repo.connection.Create(&user)
 	return user, results.Error
 }
+
+func (repo *userRepository) GetUserByEmail(email string) (models.User, error) {
+	var user models.User
+	results := repo.connection.Where("email = ?", email).FirstOrInit(&user)
+
+	return user, results.Error
+}
+
+func (repo *userRepository) GetUserByID(id string) (models.User, error) {
+	var user models.User
+	results := repo.connection.Where("id = ?", id).First(&user)
+
+	return user, results.Error
+}

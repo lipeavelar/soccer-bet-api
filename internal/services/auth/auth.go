@@ -12,6 +12,7 @@ type authService struct {
 // AuthService is the service for authentication
 type AuthService interface {
 	CreateUser(user models.User) (models.User, error)
+	CreateSession(user models.User) (string, error)
 }
 
 // NewAuthService returns a new AuthService
