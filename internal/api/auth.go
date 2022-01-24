@@ -22,7 +22,7 @@ func registerUser(context *gin.Context) {
 	if err != nil {
 		context.JSON(http.StatusInternalServerError, helpers.GenerateError(errors.New("internal server error")))
 	}
-	userService := authsrv.NewAuthService(repo)
+	userService := authsrv.NewAuthService(repo, context)
 	createdUser, err := userService.CreateUser(user)
 	if err != nil {
 		context.JSON(http.StatusInternalServerError, helpers.GenerateError(errors.New("internal server error")))
@@ -41,7 +41,7 @@ func login(context *gin.Context) {
 	if err != nil {
 		context.JSON(http.StatusInternalServerError, helpers.GenerateError(errors.New("internal server error")))
 	}
-	userService := authsrv.NewAuthService(repo)
+	userService := authsrv.NewAuthService(repo, context)
 	token, err := userService.CreateSession(user)
 	if err != nil {
 		context.JSON(http.StatusInternalServerError, helpers.GenerateError(errors.New("internal server error")))
