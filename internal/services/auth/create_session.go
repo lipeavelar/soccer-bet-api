@@ -21,7 +21,7 @@ func (srv *authService) CreateSession(user models.User) (string, error) {
 		return "", errors.New("wrong user/password")
 	}
 
-	if err := bcrypt.CompareHashAndPassword([]byte(checkUser.Password), []byte(user.Password)); err != nil {
+	if err := bcrypt.CompareHashAndPassword([]byte(checkUser.Password), []byte(user.PlainPassword)); err != nil {
 		return "", errors.New("wrong user/password")
 	}
 

@@ -12,7 +12,7 @@ func SetupRoutes(engine *gin.Engine) {
 }
 
 func setupUnauthenticatedRoutes(authGroup *gin.RouterGroup) {
-	authGroup.POST("/signin", login)
+	authGroup.POST("/sign-in", login)
 }
 
 func setupAuthRoutes(authGroup *gin.RouterGroup) {

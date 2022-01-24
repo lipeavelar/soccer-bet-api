@@ -12,7 +12,7 @@ type User struct {
 	ID             int    `json:"id"`
 	Name           string `json:"name"`
 	Email          string `json:"email"`
-	Password       string `json:"-"`
+	Password       string `json:"-" gorm:"column:password"`
 	PlainPassword  string `json:"password" gorm:"-"`
 	IsAdmin        bool   `json:"isAdmin"`
 	ChangePassword bool
