@@ -1,6 +1,7 @@
 package api
 
 import (
+	"encoding/json"
 	"errors"
 	"net/http"
 
@@ -28,6 +29,26 @@ func registerUser(context *gin.Context) {
 		context.JSON(http.StatusInternalServerError, helpers.GenerateError(errors.New("internal server error")))
 	}
 	context.JSON(http.StatusOK, createdUser)
+}
+
+func updateUser(context *gin.Context) {
+	userJson, err := context.GetRawData()
+	var user map[string]interface{}
+
+	if err := json.Unmarshal(userJson, &user); err != nil {
+		context.JSON(http.StatusBadRequest, helpers.GenerateError(errors.New("invalid json")))
+	}
+
+	repo, err := authrepo.NewUserRepo()
+	if err != nil {
+		context.JSON(http.StatusInternalServerError, helpers.GenerateError(errors.New("internal server error")))
+	}
+	userService := authsrv.NewAuthService(repo, context)
+	updatedUser, err := userService.UpdateUser(user)
+	if err != nil {
+		context.JSON(http.StatusInternalServerError, helpers.GenerateError(errors.New("internal server error")))
+	}
+	context.JSON(http.StatusOK, updatedUser)
 }
 
 func login(context *gin.Context) {

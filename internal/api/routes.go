@@ -8,7 +8,7 @@ import (
 // SetupRoutes sets up the routes for the API
 func SetupRoutes(engine *gin.Engine) {
 	setupUnauthenticatedRoutes(engine.Group("v1"))
-	setupAuthRoutes(engine.Group("v1/auth", middlewares.CheckAuth))
+	setupAuthRoutes(engine.Group("v1/users", middlewares.CheckAuth))
 }
 
 func setupUnauthenticatedRoutes(authGroup *gin.RouterGroup) {
@@ -16,5 +16,6 @@ func setupUnauthenticatedRoutes(authGroup *gin.RouterGroup) {
 }
 
 func setupAuthRoutes(authGroup *gin.RouterGroup) {
-	authGroup.POST("/register", registerUser)
+	authGroup.POST("/", registerUser)
+	authGroup.PUT("/", updateUser)
 }

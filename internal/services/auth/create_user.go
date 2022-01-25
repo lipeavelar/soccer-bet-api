@@ -15,9 +15,6 @@ func (srv *authService) CreateUser(user models.User) (models.User, error) {
 		return models.User{}, errors.New("invalid user")
 	}
 
-	if err := user.HashPassword(); err != nil {
-		return models.User{}, err
-	}
 	registeredUser, err := srv.repository.CreateUser(user)
 	if err != nil {
 		return models.User{}, err

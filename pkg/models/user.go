@@ -1,10 +1,12 @@
 package models
 
 import (
+	"errors"
 	"time"
 
 	"github.com/lipeavelar/soccer-bet-api/pkg/helpers"
 	"golang.org/x/crypto/bcrypt"
+	"gorm.io/gorm"
 )
 
 // User model
@@ -24,11 +26,23 @@ func (u *User) TableName() string {
 	return "users"
 }
 
-func (u *User) HashPassword() error {
-	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(u.PlainPassword), 10)
-	if err != nil {
-		return helpers.GenerateError(err)
+func (u *User) BeforeCreate(tx *gorm.DB) error {
+	if u.PlainPassword == "" {
+		return errors.New("user password is required")
 	}
-	u.Password = string(hashedPassword)
+
+	hashedPassword, err := HashPassword(u.PlainPassword)
+	if err != nil {
+		return err
+	}
+	u.Password = hashedPassword
 	return nil
+}
+
+func HashPassword(plainPassword string) (string, error) {
+	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(plainPassword), 10)
+	if err != nil {
+		return "", helpers.GenerateError(err)
+	}
+	return string(hashedPassword), nil
 }

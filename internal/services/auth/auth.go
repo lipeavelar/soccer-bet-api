@@ -15,6 +15,7 @@ type authService struct {
 type AuthService interface {
 	CreateUser(user models.User) (models.User, error)
 	CreateSession(user models.User) (string, error)
+	UpdateUser(userUpdates map[string]interface{}) (models.User, error)
 }
 
 // NewAuthService returns a new AuthService
