@@ -1,20 +1,8 @@
 package auth
 
 import (
-	"github.com/lipeavelar/soccer-bet-api/database"
 	"github.com/lipeavelar/soccer-bet-api/pkg/models"
 )
-
-// NewUserRepo Returns an User repo object
-func NewUserRepo() (UserRepo, error) {
-	conn, err := database.GetConnection()
-	if err != nil {
-		return &userRepository{}, err
-	}
-	return &userRepository{
-		connection: conn,
-	}, nil
-}
 
 func (repo *userRepository) GetUserByEmail(email string) (models.User, error) {
 	var user models.User

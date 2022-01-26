@@ -3,7 +3,7 @@
 SELECT 'up SQL query';
 ALTER TABLE users DROP CONSTRAINT users_pkey;
 ALTER TABLE users DROP COLUMN id;
-ALTER TABLE users ADD COLUMN id serial;
+ALTER TABLE users ADD COLUMN id SERIAL;
 ALTER TABLE users ADD PRIMARY KEY (id);
 -- +goose StatementEnd
 

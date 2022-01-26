@@ -3,7 +3,7 @@
 # top-most EditorConfig file
 root = true
 
-[makefile]
+[Makefile]
 indent_style = tab
 indent_size = 4
 

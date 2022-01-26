@@ -1,12 +1,5 @@
 version: '3.8'
 
-x-common-variables:
-  &database-variables
-  DB_NAME: "${DB_NAME}"
-  DB_USER: "${DB_USER}"
-  DB_PASS: "${DB_PASS}"
-  DB_HOST: "${DB_HOST}"
-
 services:
   db:
     image: postgres:14
@@ -28,9 +21,8 @@ services:
     build:
       context: .
       target: dev
-    environment:
-      <<: *database-variables
-      API_PORT: ${API_PORT}
+    env_file:
+      - .env
     volumes:
       - .:/app:rw,delegated
     ports:

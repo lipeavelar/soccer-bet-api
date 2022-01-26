@@ -12,6 +12,7 @@ import (
 	"github.com/golang-jwt/jwt"
 	"github.com/lipeavelar/soccer-bet-api/pkg/constants"
 	"github.com/lipeavelar/soccer-bet-api/pkg/helpers"
+	"github.com/lipeavelar/soccer-bet-api/pkg/models"
 )
 
 func CheckAuth(context *gin.Context) {
@@ -38,7 +39,7 @@ func CheckAuth(context *gin.Context) {
 		return
 	}
 
-	repo, err := authrepo.NewUserRepo()
+	repo, err := authrepo.NewUsersRepo()
 	if err != nil {
 		context.JSON(http.StatusInternalServerError, helpers.GenerateError(errors.New("internal server error")))
 	}
@@ -48,5 +49,19 @@ func CheckAuth(context *gin.Context) {
 	}
 
 	context.Set("user", user)
+	context.Next()
+}
+
+func IsAdmin(context *gin.Context) {
+	currentUserRaw, _ := context.Get("user")
+	if currentUserRaw == nil {
+		context.AbortWithStatus(401)
+		return
+	}
+	if currentUser, ok := currentUserRaw.(models.User); !ok || !currentUser.IsAdmin {
+		context.AbortWithStatus(401)
+		return
+	}
+
 	context.Next()
 }

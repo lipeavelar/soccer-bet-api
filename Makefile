@@ -12,6 +12,11 @@ migrate: ## Run migrations with goose (need to install goose first)
 	@echo "Migrating from old Makefile to new Makefile"
 	goose -dir ./database/migrations/ postgres 'host=localhost port=$(DB_PORT) user=$(DB_USER) password=$(DB_PASS) dbname=$(DB_NAME) sslmode=disable' up
 
+.PHONY: reset-migrations
+reset-migrations: ## Reset migrations
+	@echo "Migrating from old Makefile to new Makefile"
+	goose -dir ./database/migrations/ postgres 'host=localhost port=$(DB_PORT) user=$(DB_USER) password=$(DB_PASS) dbname=$(DB_NAME) sslmode=disable' down
+
 .PHONY: migration-status
 migration-status: ## Run migrations with goose (need to install goose first)
 	@echo "Migrating from old Makefile to new Makefile"

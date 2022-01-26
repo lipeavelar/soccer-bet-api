@@ -19,7 +19,7 @@ func registerUser(context *gin.Context) {
 		context.JSON(http.StatusBadRequest, helpers.GenerateError(errors.New("invalid json")))
 	}
 
-	repo, err := authrepo.NewUserRepo()
+	repo, err := authrepo.NewUsersRepo()
 	if err != nil {
 		context.JSON(http.StatusInternalServerError, helpers.GenerateError(errors.New("internal server error")))
 	}
@@ -33,13 +33,16 @@ func registerUser(context *gin.Context) {
 
 func updateUser(context *gin.Context) {
 	userJson, err := context.GetRawData()
+	if err != nil {
+		context.JSON(http.StatusBadRequest, helpers.GenerateError(errors.New("invalid json")))
+	}
 	var user map[string]interface{}
 
 	if err := json.Unmarshal(userJson, &user); err != nil {
 		context.JSON(http.StatusBadRequest, helpers.GenerateError(errors.New("invalid json")))
 	}
 
-	repo, err := authrepo.NewUserRepo()
+	repo, err := authrepo.NewUsersRepo()
 	if err != nil {
 		context.JSON(http.StatusInternalServerError, helpers.GenerateError(errors.New("internal server error")))
 	}
@@ -58,7 +61,7 @@ func login(context *gin.Context) {
 		context.JSON(http.StatusBadRequest, helpers.GenerateError(errors.New("invalid json")))
 	}
 
-	repo, err := authrepo.NewUserRepo()
+	repo, err := authrepo.NewUsersRepo()
 	if err != nil {
 		context.JSON(http.StatusInternalServerError, helpers.GenerateError(errors.New("internal server error")))
 	}

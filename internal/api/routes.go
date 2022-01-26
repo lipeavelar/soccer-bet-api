@@ -9,6 +9,7 @@ import (
 func SetupRoutes(engine *gin.Engine) {
 	setupUnauthenticatedRoutes(engine.Group("v1"))
 	setupAuthRoutes(engine.Group("v1/users", middlewares.CheckAuth))
+	setupMatchesRoutes(engine.Group("v1/matches", middlewares.CheckAuth, middlewares.IsAdmin))
 }
 
 func setupUnauthenticatedRoutes(authGroup *gin.RouterGroup) {
@@ -16,6 +17,10 @@ func setupUnauthenticatedRoutes(authGroup *gin.RouterGroup) {
 }
 
 func setupAuthRoutes(authGroup *gin.RouterGroup) {
-	authGroup.POST("/", registerUser)
+	authGroup.POST("/", middlewares.IsAdmin, registerUser)
 	authGroup.PUT("/", updateUser)
+}
+
+func setupMatchesRoutes(authGroup *gin.RouterGroup) {
+	authGroup.POST("/:season", initializeMatches)
 }
