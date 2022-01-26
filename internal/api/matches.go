@@ -26,3 +26,14 @@ func initializeMatches(context *gin.Context) {
 		context.JSON(http.StatusInternalServerError, helpers.GenerateError(errors.New("internal server error")))
 	}
 }
+
+func updateMatches(context *gin.Context) {
+	repo, err := matchesrepo.NewMatchesRepo()
+	if err != nil {
+		context.JSON(http.StatusInternalServerError, helpers.GenerateError(errors.New("internal server error")))
+	}
+	matchService := matchessrv.NewMatchesService(repo, context)
+	if err := matchService.UpdateMatches(); err != nil {
+		context.JSON(http.StatusInternalServerError, helpers.GenerateError(errors.New("internal server error")))
+	}
+}

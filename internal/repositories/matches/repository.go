@@ -11,7 +11,9 @@ type matchesRepository struct {
 }
 
 type MatchesRepo interface {
-	CreateMatches(matches []models.Match) error
+	SaveMatches(matches []models.Match) error
+	GetMatchesBySeason(season int) ([]models.Match, error)
+	GetCurrentSeason() (int, error)
 }
 
 // NewMatchesRepo Returns an Match repository object

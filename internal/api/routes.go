@@ -23,4 +23,5 @@ func setupAuthRoutes(authGroup *gin.RouterGroup) {
 
 func setupMatchesRoutes(authGroup *gin.RouterGroup) {
 	authGroup.POST("/:season", initializeMatches)
+	authGroup.PUT("/", updateMatches)
 }
