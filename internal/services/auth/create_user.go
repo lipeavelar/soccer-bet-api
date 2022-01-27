@@ -5,6 +5,8 @@ import (
 )
 
 func (srv *authService) CreateUser(user models.User) (models.User, error) {
+	user.ChangePassword = true
+	user.WantEmail = true
 	registeredUser, err := srv.repository.CreateUser(user)
 	if err != nil {
 		return models.User{}, err

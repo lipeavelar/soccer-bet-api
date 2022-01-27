@@ -17,7 +17,8 @@ type User struct {
 	Password       string `json:"-" gorm:"column:password"`
 	PlainPassword  string `json:"password" gorm:"-"`
 	IsAdmin        bool   `json:"isAdmin"`
-	ChangePassword bool
+	ChangePassword bool   `json:"changePassword"`
+	WantEmail      bool   `json:"wantEmail"`
 	CreatedAt      time.Time
 	UpdatedAt      time.Time
 }
