@@ -21,7 +21,7 @@ func initializeMatches(context *gin.Context) {
 	if err != nil {
 		context.JSON(http.StatusInternalServerError, helpers.GenerateError(errors.New("internal server error")))
 	}
-	matchService := matchessrv.NewMatchesService(repo, context)
+	matchService := matchessrv.NewMatchesService(repo)
 	if err := matchService.InitializeMatches(currentSeason); err != nil {
 		context.JSON(http.StatusInternalServerError, helpers.GenerateError(errors.New("internal server error")))
 	}
@@ -32,7 +32,7 @@ func updateMatches(context *gin.Context) {
 	if err != nil {
 		context.JSON(http.StatusInternalServerError, helpers.GenerateError(errors.New("internal server error")))
 	}
-	matchService := matchessrv.NewMatchesService(repo, context)
+	matchService := matchessrv.NewMatchesService(repo)
 	if err := matchService.UpdateMatches(); err != nil {
 		context.JSON(http.StatusInternalServerError, helpers.GenerateError(errors.New("internal server error")))
 	}

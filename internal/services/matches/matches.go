@@ -7,13 +7,11 @@ import (
 	"os"
 	"time"
 
-	"github.com/gin-gonic/gin"
 	matchesrepo "github.com/lipeavelar/soccer-bet-api/internal/repositories/matches"
 )
 
 type matchesService struct {
 	repository matchesrepo.MatchesRepo
-	context    *gin.Context
 }
 
 type matchesResponse struct {
@@ -48,10 +46,9 @@ type MatchesService interface {
 }
 
 // NewMatchesService returns a new MatchesService
-func NewMatchesService(repo matchesrepo.MatchesRepo, c *gin.Context) MatchesService {
+func NewMatchesService(repo matchesrepo.MatchesRepo) MatchesService {
 	return &matchesService{
 		repository: repo,
-		context:    c,
 	}
 }
 
