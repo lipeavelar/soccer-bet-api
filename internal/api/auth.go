@@ -17,16 +17,19 @@ func registerUser(context *gin.Context) {
 
 	if err := context.BindJSON(&user); err != nil {
 		context.JSON(http.StatusBadRequest, helpers.GenerateError(errors.New("invalid json")))
+		return
 	}
 
 	repo, err := authrepo.NewUsersRepo()
 	if err != nil {
 		context.JSON(http.StatusInternalServerError, helpers.GenerateError(errors.New("internal server error")))
+		return
 	}
-	userService := authsrv.NewAuthService(repo, context)
+	userService := authsrv.NewAuthService(repo)
 	createdUser, err := userService.CreateUser(user)
 	if err != nil {
 		context.JSON(http.StatusInternalServerError, helpers.GenerateError(errors.New("internal server error")))
+		return
 	}
 	context.JSON(http.StatusOK, createdUser)
 }
@@ -35,21 +38,33 @@ func updateUser(context *gin.Context) {
 	userJson, err := context.GetRawData()
 	if err != nil {
 		context.JSON(http.StatusBadRequest, helpers.GenerateError(errors.New("invalid json")))
+		return
 	}
 	var user map[string]interface{}
 
 	if err := json.Unmarshal(userJson, &user); err != nil {
 		context.JSON(http.StatusBadRequest, helpers.GenerateError(errors.New("invalid json")))
+		return
 	}
 
 	repo, err := authrepo.NewUsersRepo()
 	if err != nil {
 		context.JSON(http.StatusInternalServerError, helpers.GenerateError(errors.New("internal server error")))
+		return
 	}
-	userService := authsrv.NewAuthService(repo, context)
-	updatedUser, err := userService.UpdateUser(user)
+
+	loggedUserRaw, _ := context.Get("user")
+	loggedUser, ok := loggedUserRaw.(models.User)
+	if !ok {
+		context.JSON(http.StatusBadRequest, helpers.GenerateError(errors.New("invalid user")))
+		return
+	}
+
+	userService := authsrv.NewAuthService(repo)
+	updatedUser, err := userService.UpdateUser(user, loggedUser)
 	if err != nil {
 		context.JSON(http.StatusInternalServerError, helpers.GenerateError(errors.New("internal server error")))
+		return
 	}
 	context.JSON(http.StatusOK, updatedUser)
 }
@@ -59,16 +74,19 @@ func login(context *gin.Context) {
 
 	if err := context.BindJSON(&user); err != nil {
 		context.JSON(http.StatusBadRequest, helpers.GenerateError(errors.New("invalid json")))
+		return
 	}
 
 	repo, err := authrepo.NewUsersRepo()
 	if err != nil {
 		context.JSON(http.StatusInternalServerError, helpers.GenerateError(errors.New("internal server error")))
+		return
 	}
-	userService := authsrv.NewAuthService(repo, context)
+	userService := authsrv.NewAuthService(repo)
 	token, err := userService.CreateSession(user)
 	if err != nil {
 		context.JSON(http.StatusInternalServerError, helpers.GenerateError(errors.New("internal server error")))
+		return
 	}
 	context.JSON(http.StatusOK, token)
 }
