@@ -7,7 +7,9 @@ import (
 
 	"github.com/gin-gonic/gin"
 	matchesrepo "github.com/lipeavelar/soccer-bet-api/internal/repositories/matches"
+	teamsrepo "github.com/lipeavelar/soccer-bet-api/internal/repositories/teams"
 	matchessrv "github.com/lipeavelar/soccer-bet-api/internal/services/matches"
+	teamssrv "github.com/lipeavelar/soccer-bet-api/internal/services/teams"
 	"github.com/lipeavelar/soccer-bet-api/pkg/helpers"
 )
 
@@ -15,15 +17,36 @@ func initializeMatches(context *gin.Context) {
 	currentSeason, err := strconv.Atoi(context.Param("season"))
 	if err != nil {
 		context.JSON(http.StatusBadRequest, helpers.GenerateError(errors.New("invalid season value")))
+		return
 	}
 
-	repo, err := matchesrepo.NewMatchesRepo()
+	// Initialize matches season
+	matchesRepo, err := matchesrepo.NewMatchesRepo()
 	if err != nil {
 		context.JSON(http.StatusInternalServerError, helpers.GenerateError(errors.New("internal server error")))
+		return
 	}
-	matchService := matchessrv.NewMatchesService(repo)
+	matchService := matchessrv.NewMatchesService(matchesRepo)
 	if err := matchService.InitializeMatches(currentSeason); err != nil {
 		context.JSON(http.StatusInternalServerError, helpers.GenerateError(errors.New("internal server error")))
+		return
+	}
+
+	// Add teams
+	currentSeasonTeams, err := matchService.GetTeamsBySeason(currentSeason)
+	if err != nil {
+		context.JSON(http.StatusInternalServerError, helpers.GenerateError(errors.New("internal server error")))
+		return
+	}
+	teamsRepo, err := teamsrepo.NewTeamsRepo()
+	if err != nil {
+		context.JSON(http.StatusInternalServerError, helpers.GenerateError(errors.New("internal server error")))
+		return
+	}
+	teamsService := teamssrv.NewTeamsService(teamsRepo)
+	if err := teamsService.CreateTeams(currentSeasonTeams); err != nil {
+		context.JSON(http.StatusInternalServerError, helpers.GenerateError(errors.New("internal server error")))
+		return
 	}
 }
 

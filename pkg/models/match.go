@@ -15,7 +15,3 @@ type Match struct {
 	CreatedAt     time.Time `json:"-"`
 	UpdatedAt     time.Time `json:"-"`
 }
-
-func (m *Match) TableName() string {
-	return "matches"
-}

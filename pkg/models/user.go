@@ -23,10 +23,6 @@ type User struct {
 	UpdatedAt      time.Time
 }
 
-func (u *User) TableName() string {
-	return "users"
-}
-
 func (u *User) BeforeCreate(tx *gorm.DB) error {
 	if u.PlainPassword == "" {
 		return errors.New("user password is required")

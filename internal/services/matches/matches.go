@@ -42,6 +42,7 @@ type scoreResponse struct {
 type MatchesService interface {
 	InitializeMatches(season int) error
 	UpdateMatches() error
+	GetTeamsBySeason(season int) ([]string, error)
 	getMatchesFromAPI() ([]matchResponse, error)
 }
 
