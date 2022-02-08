@@ -1,6 +1,6 @@
-package teams
+package teamssrv
 
-import teamsrepo "github.com/lipeavelar/soccer-bet-api/internal/repositories/teams"
+import "github.com/lipeavelar/soccer-bet-api/internal/repositories/teamsrepo"
 
 type teamsService struct {
 	repository teamsrepo.TeamsRepo

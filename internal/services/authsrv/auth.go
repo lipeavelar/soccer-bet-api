@@ -1,7 +1,7 @@
-package auth
+package authsrv
 
 import (
-	authrepo "github.com/lipeavelar/soccer-bet-api/internal/repositories/auth"
+	authrepo "github.com/lipeavelar/soccer-bet-api/internal/repositories/authrepo"
 	"github.com/lipeavelar/soccer-bet-api/pkg/models"
 )
 

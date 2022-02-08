@@ -1,8 +1,8 @@
 package jobs
 
 import (
-	matchesrepo "github.com/lipeavelar/soccer-bet-api/internal/repositories/matches"
-	matchessrv "github.com/lipeavelar/soccer-bet-api/internal/services/matches"
+	"github.com/lipeavelar/soccer-bet-api/internal/repositories/matchesrepo"
+	"github.com/lipeavelar/soccer-bet-api/internal/services/matchessrv"
 )
 
 func UpdateMatches() error {

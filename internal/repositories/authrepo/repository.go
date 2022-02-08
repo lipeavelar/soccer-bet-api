@@ -1,4 +1,4 @@
-package auth
+package authrepo
 
 import (
 	"github.com/lipeavelar/soccer-bet-api/database"

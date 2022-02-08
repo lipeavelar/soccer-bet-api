@@ -6,8 +6,8 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
-	authrepo "github.com/lipeavelar/soccer-bet-api/internal/repositories/auth"
-	authsrv "github.com/lipeavelar/soccer-bet-api/internal/services/auth"
+	"github.com/lipeavelar/soccer-bet-api/internal/repositories/authrepo"
+	"github.com/lipeavelar/soccer-bet-api/internal/services/authsrv"
 	"github.com/lipeavelar/soccer-bet-api/pkg/helpers"
 	"github.com/lipeavelar/soccer-bet-api/pkg/models"
 )

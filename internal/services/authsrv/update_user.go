@@ -1,4 +1,4 @@
-package auth
+package authsrv
 
 import (
 	"github.com/lipeavelar/soccer-bet-api/pkg/models"

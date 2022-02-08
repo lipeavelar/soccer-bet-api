@@ -1,4 +1,4 @@
-package matches
+package matchesrepo
 
 import (
 	"github.com/lipeavelar/soccer-bet-api/database"

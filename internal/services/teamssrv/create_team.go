@@ -1,4 +1,4 @@
-package teams
+package teamssrv
 
 import (
 	"github.com/lipeavelar/soccer-bet-api/pkg/helpers"

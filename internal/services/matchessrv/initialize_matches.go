@@ -1,4 +1,4 @@
-package matches
+package matchessrv
 
 import (
 	"github.com/lipeavelar/soccer-bet-api/pkg/models"

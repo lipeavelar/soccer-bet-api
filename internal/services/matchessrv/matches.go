@@ -1,4 +1,4 @@
-package matches
+package matchessrv
 
 import (
 	"encoding/json"
@@ -7,7 +7,7 @@ import (
 	"os"
 	"time"
 
-	matchesrepo "github.com/lipeavelar/soccer-bet-api/internal/repositories/matches"
+	"github.com/lipeavelar/soccer-bet-api/internal/repositories/matchesrepo"
 )
 
 type matchesService struct {

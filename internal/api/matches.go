@@ -6,10 +6,10 @@ import (
 	"strconv"
 
 	"github.com/gin-gonic/gin"
-	matchesrepo "github.com/lipeavelar/soccer-bet-api/internal/repositories/matches"
-	teamsrepo "github.com/lipeavelar/soccer-bet-api/internal/repositories/teams"
-	matchessrv "github.com/lipeavelar/soccer-bet-api/internal/services/matches"
-	teamssrv "github.com/lipeavelar/soccer-bet-api/internal/services/teams"
+	"github.com/lipeavelar/soccer-bet-api/internal/repositories/matchesrepo"
+	"github.com/lipeavelar/soccer-bet-api/internal/repositories/teamsrepo"
+	"github.com/lipeavelar/soccer-bet-api/internal/services/matchessrv"
+	"github.com/lipeavelar/soccer-bet-api/internal/services/teamssrv"
 	"github.com/lipeavelar/soccer-bet-api/pkg/helpers"
 )
 

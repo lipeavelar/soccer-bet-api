@@ -7,7 +7,7 @@ import (
 	"strings"
 
 	"github.com/gin-gonic/gin"
-	authrepo "github.com/lipeavelar/soccer-bet-api/internal/repositories/auth"
+	"github.com/lipeavelar/soccer-bet-api/internal/repositories/authrepo"
 
 	"github.com/golang-jwt/jwt"
 	"github.com/lipeavelar/soccer-bet-api/pkg/constants"
