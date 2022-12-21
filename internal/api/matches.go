@@ -32,19 +32,13 @@ func initializeMatches(context *gin.Context) {
 		return
 	}
 
-	// Add teams
-	currentSeasonTeams, err := matchService.GetTeamsBySeason(currentSeason)
-	if err != nil {
-		context.JSON(http.StatusInternalServerError, helpers.GenerateError(errors.New("internal server error")))
-		return
-	}
 	teamsRepo, err := teamsrepo.NewTeamsRepo()
 	if err != nil {
 		context.JSON(http.StatusInternalServerError, helpers.GenerateError(errors.New("internal server error")))
 		return
 	}
 	teamsService := teamssrv.NewTeamsService(teamsRepo)
-	if err := teamsService.CreateTeams(currentSeasonTeams); err != nil {
+	if err := teamsService.CreateTeams(); err != nil {
 		context.JSON(http.StatusInternalServerError, helpers.GenerateError(errors.New("internal server error")))
 		return
 	}

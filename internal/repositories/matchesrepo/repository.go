@@ -14,7 +14,6 @@ type MatchesRepo interface {
 	SaveMatches(matches []models.Match) error
 	GetMatchesBySeason(season int) ([]models.Match, error)
 	GetCurrentSeason() (int, error)
-	GetTeamsBySeason(season int) ([]string, error)
 }
 
 // NewMatchesRepo Returns an Match repository object

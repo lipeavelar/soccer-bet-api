@@ -88,5 +88,7 @@ func login(context *gin.Context) {
 		context.JSON(http.StatusInternalServerError, helpers.GenerateError(errors.New("internal server error")))
 		return
 	}
-	context.JSON(http.StatusOK, token)
+	context.JSON(http.StatusOK, gin.H{
+		"token": token,
+	})
 }

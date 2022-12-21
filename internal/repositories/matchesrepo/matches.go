@@ -18,9 +18,3 @@ func (repo *matchesRepository) GetCurrentSeason() (int, error) {
 	results := repo.connection.Table("matches").Select("max(season)").Scan(&season)
 	return season, results.Error
 }
-
-func (repo *matchesRepository) GetTeamsBySeason(season int) ([]string, error) {
-	var teams []string
-	results := repo.connection.Table("matches").Select("DISTINCT home_team").Where("season = ?", season).Scan(&teams)
-	return teams, results.Error
-}
