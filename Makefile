@@ -38,3 +38,7 @@ start: ## Run API server and database
 .PHONY: stop
 stop: ## Stops API server and database
 	docker-compose down
+
+.PHONY: check-vuln
+check-vuln: ## Check vulnerabilities on code base
+	govulncheck ./...

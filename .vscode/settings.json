@@ -2,5 +2,13 @@
   "[makefile]": {
     "editor.insertSpaces": false,
     "editor.tabSize": 4
-  }
+  },
+  "[go]": {
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+      "source.organizeImports": true
+    }
+  },
+  "go.autocompleteUnimportedPackages": true,
+  "go.formatTool": "goimports"
 }
