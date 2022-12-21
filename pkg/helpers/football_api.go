@@ -6,7 +6,7 @@ import (
 	"os"
 )
 
-func HttpRequest(endPoint string) ([]byte, error) {
+func FootballAPIRequest(endPoint string) ([]byte, error) {
 	apiUrl := os.Getenv("INFO_API_URL")
 	apiToken := os.Getenv("INFO_API_TOKEN")
 	apiMethod := os.Getenv("INFO_API_METHOD")

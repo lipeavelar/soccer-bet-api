@@ -29,7 +29,7 @@ func (srv *matchesService) UpdateMatches() error {
 	return srv.repository.SaveMatches(matchesToUpdate)
 }
 
-func compareMatch(match models.Match, newMatches []matchResponse) models.Match {
+func compareMatch(match models.Match, newMatches []models.MatchResponse) models.Match {
 	for _, newMatchRes := range newMatches {
 		if match.APIMatchID == newMatchRes.ID && (newMatchRes.Date != match.MatchDate ||
 			newMatchRes.Score.FullTime.HomeTeam != match.HomeTeamScore ||

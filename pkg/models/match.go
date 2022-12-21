@@ -15,3 +15,16 @@ type Match struct {
 	CreatedAt     time.Time `json:"-"`
 	UpdatedAt     time.Time `json:"-"`
 }
+
+type MatchesResponse struct {
+	Matches []MatchResponse `json:"matches"`
+}
+
+type MatchResponse struct {
+	ID           int           `json:"id"`
+	Date         time.Time     `json:"utcDate"`
+	MatchDay     int           `json:"matchday"`
+	HomeTeamName TeamResponse  `json:"homeTeam"`
+	AwayTeamName TeamResponse  `json:"awayTeam"`
+	Score        ScoreResponse `json:"score"`
+}

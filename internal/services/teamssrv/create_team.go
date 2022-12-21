@@ -8,11 +8,11 @@ import (
 )
 
 func (t *teamsService) CreateTeams() error {
-	teamsJSON, err := helpers.HttpRequest("teams")
+	teamsJSON, err := helpers.FootballAPIRequest("teams")
 	if err != nil {
 		return err
 	}
-	var teamRes teamsResponse
+	var teamRes models.TeamsResponse
 	if err := json.Unmarshal(teamsJSON, &teamRes); err != nil {
 		return err
 	}

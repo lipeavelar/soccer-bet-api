@@ -11,3 +11,14 @@ type Team struct {
 	CreatedAt time.Time `json:"-"`
 	UpdatedAt time.Time `json:"-"`
 }
+
+type TeamsResponse struct {
+	Teams []TeamResponse `json:"teams"`
+}
+
+type TeamResponse struct {
+	Name     string `json:"name"`
+	Alias    string `json:"shortName"`
+	Acronym  string `json:"tla"`
+	CrestURL string `json:"crestUrl"`
+}
