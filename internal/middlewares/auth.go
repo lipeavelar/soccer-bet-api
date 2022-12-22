@@ -1,7 +1,6 @@
 package middlewares
 
 import (
-	"errors"
 	"net/http"
 	"os"
 	"strings"
@@ -41,11 +40,11 @@ func CheckAuth(context *gin.Context) {
 
 	repo, err := authrepo.NewUsersRepo()
 	if err != nil {
-		context.JSON(http.StatusInternalServerError, helpers.GenerateError(errors.New("internal server error")))
+		context.JSON(http.StatusInternalServerError, helpers.GenerateError("internal server error", err))
 	}
 	user, err := repo.GetUserByID(claims.Issuer)
 	if err != nil {
-		context.JSON(http.StatusInternalServerError, helpers.GenerateError(errors.New("internal server error")))
+		context.JSON(http.StatusInternalServerError, helpers.GenerateError("internal server error", err))
 	}
 
 	context.Set("user", user)

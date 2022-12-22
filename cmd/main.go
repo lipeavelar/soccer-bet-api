@@ -15,9 +15,11 @@ import (
 func main() {
 	port := os.Getenv("API_PORT")
 	engine := gin.Default()
+	engine.SetTrustedProxies(nil)
 	api.SetupRoutes(engine)
 	engine.Run(":" + port)
 
+	//TODO: remove this from here and create a separate scheduler (maybe a scheduler is not even necessary, just schedule this to execute as cmd through command)
 	scheduler := gocron.NewScheduler(time.UTC)
 	_, err := scheduler.Every(1).Day().At("05:00").Do(jobs.UpdateMatches)
 	if err != nil {

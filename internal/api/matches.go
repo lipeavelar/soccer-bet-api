@@ -1,7 +1,6 @@
 package api
 
 import (
-	"errors"
 	"net/http"
 	"strconv"
 
@@ -16,30 +15,30 @@ import (
 func initializeMatches(context *gin.Context) {
 	currentSeason, err := strconv.Atoi(context.Param("season"))
 	if err != nil {
-		context.JSON(http.StatusBadRequest, helpers.GenerateError(errors.New("invalid season value")))
+		context.JSON(http.StatusBadRequest, helpers.GenerateError("invalid season value", err))
 		return
 	}
 
 	// Initialize matches season
 	matchesRepo, err := matchesrepo.NewMatchesRepo()
 	if err != nil {
-		context.JSON(http.StatusInternalServerError, helpers.GenerateError(errors.New("internal server error")))
+		context.JSON(http.StatusInternalServerError, helpers.GenerateError("internal server error", err))
 		return
 	}
 	matchService := matchessrv.NewMatchesService(matchesRepo)
 	if err := matchService.InitializeMatches(currentSeason); err != nil {
-		context.JSON(http.StatusInternalServerError, helpers.GenerateError(errors.New("internal server error")))
+		context.JSON(http.StatusInternalServerError, helpers.GenerateError("internal server error", err))
 		return
 	}
 
 	teamsRepo, err := teamsrepo.NewTeamsRepo()
 	if err != nil {
-		context.JSON(http.StatusInternalServerError, helpers.GenerateError(errors.New("internal server error")))
+		context.JSON(http.StatusInternalServerError, helpers.GenerateError("internal server error", err))
 		return
 	}
 	teamsService := teamssrv.NewTeamsService(teamsRepo)
 	if err := teamsService.CreateTeams(); err != nil {
-		context.JSON(http.StatusInternalServerError, helpers.GenerateError(errors.New("internal server error")))
+		context.JSON(http.StatusInternalServerError, helpers.GenerateError("internal server error", err))
 		return
 	}
 }
@@ -47,10 +46,10 @@ func initializeMatches(context *gin.Context) {
 func updateMatches(context *gin.Context) {
 	repo, err := matchesrepo.NewMatchesRepo()
 	if err != nil {
-		context.JSON(http.StatusInternalServerError, helpers.GenerateError(errors.New("internal server error")))
+		context.JSON(http.StatusInternalServerError, helpers.GenerateError("internal server error", err))
 	}
 	matchService := matchessrv.NewMatchesService(repo)
 	if err := matchService.UpdateMatches(); err != nil {
-		context.JSON(http.StatusInternalServerError, helpers.GenerateError(errors.New("internal server error")))
+		context.JSON(http.StatusInternalServerError, helpers.GenerateError("internal server error", err))
 	}
 }

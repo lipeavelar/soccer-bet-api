@@ -2,6 +2,7 @@ package matchessrv
 
 import (
 	"encoding/json"
+	"time"
 
 	"github.com/lipeavelar/soccer-bet-api/internal/repositories/matchesrepo"
 	"github.com/lipeavelar/soccer-bet-api/pkg/helpers"
@@ -37,4 +38,12 @@ func (srv *matchesService) getMatchesFromAPI() ([]models.MatchResponse, error) {
 	}
 
 	return matchesRes.Matches, nil
+}
+
+func getMatchLocalDate(date time.Time) (time.Time, error) {
+	timezone, err := helpers.GetTimezoneString("brazil")
+	if err != nil {
+		return time.Time{}, err
+	}
+	return helpers.ConvertToTimezone(date, timezone)
 }

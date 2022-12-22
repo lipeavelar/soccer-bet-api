@@ -11,10 +11,15 @@ func (srv *matchesService) InitializeMatches(currentSeason int) error {
 	}
 
 	matches := make([]models.Match, len(matchesRes))
+
 	for i, matchRes := range matchesRes {
+		matchDay, err := getMatchLocalDate(matchRes.Date)
+		if err != nil {
+			return err
+		}
 		matches[i] = models.Match{
 			APIMatchID:    matchRes.ID,
-			MatchDate:     matchRes.Date,
+			MatchDate:     matchDay,
 			MatchDay:      matchRes.MatchDay,
 			HomeTeam:      matchRes.HomeTeamName.Name,
 			AwayTeam:      matchRes.AwayTeamName.Name,

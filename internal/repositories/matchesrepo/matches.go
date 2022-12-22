@@ -7,9 +7,15 @@ func (repo *matchesRepository) SaveMatches(matches []models.Match) error {
 	return results.Error
 }
 
-func (repo *matchesRepository) GetMatchesBySeason(season int) ([]models.Match, error) {
+func (repo *matchesRepository) GetMatch(id int) (models.Match, error) {
+	var match models.Match
+	results := repo.connection.First(&match, id)
+	return match, results.Error
+}
+
+func (repo *matchesRepository) GetMatches(filters models.Match) ([]models.Match, error) {
 	var matches []models.Match
-	results := repo.connection.Where("season = ?", season).Find(&matches)
+	results := repo.connection.Where(filters).Find(&matches)
 	return matches, results.Error
 }
 

@@ -10,10 +10,11 @@ func SetupRoutes(engine *gin.Engine) {
 	setupUnauthenticatedRoutes(engine.Group("v1"))
 	setupAuthRoutes(engine.Group("v1/users", middlewares.CheckAuth))
 	setupMatchesRoutes(engine.Group("v1/matches", middlewares.CheckAuth, middlewares.IsAdmin))
+	setupBetsRoutes(engine.Group("v1/bets", middlewares.CheckAuth))
 }
 
-func setupUnauthenticatedRoutes(authGroup *gin.RouterGroup) {
-	authGroup.POST("/sign-in", login)
+func setupUnauthenticatedRoutes(unauthGroup *gin.RouterGroup) {
+	unauthGroup.POST("/sign-in", login)
 }
 
 func setupAuthRoutes(authGroup *gin.RouterGroup) {
@@ -21,7 +22,11 @@ func setupAuthRoutes(authGroup *gin.RouterGroup) {
 	authGroup.PUT("/", updateUser)
 }
 
-func setupMatchesRoutes(authGroup *gin.RouterGroup) {
-	authGroup.POST("/:season", initializeMatches)
-	authGroup.PUT("/", updateMatches)
+func setupMatchesRoutes(matchesGroup *gin.RouterGroup) {
+	matchesGroup.POST("/:season", initializeMatches)
+	matchesGroup.PUT("/", updateMatches)
+}
+
+func setupBetsRoutes(betsGroup *gin.RouterGroup) {
+	betsGroup.POST("/", createBet)
 }

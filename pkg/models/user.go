@@ -4,7 +4,6 @@ import (
 	"errors"
 	"time"
 
-	"github.com/lipeavelar/soccer-bet-api/pkg/helpers"
 	"golang.org/x/crypto/bcrypt"
 	"gorm.io/gorm"
 )
@@ -39,7 +38,7 @@ func (u *User) BeforeCreate(tx *gorm.DB) error {
 func HashPassword(plainPassword string) (string, error) {
 	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(plainPassword), 10)
 	if err != nil {
-		return "", helpers.GenerateError(err)
+		return "", err
 	}
 	return string(hashedPassword), nil
 }
