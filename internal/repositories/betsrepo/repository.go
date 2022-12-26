@@ -14,6 +14,7 @@ type BetsRepo interface {
 	CreateBet(bet models.Bet) error
 	UpdateBet(bet models.Bet) error
 	GetBet(betID int) (models.Bet, error)
+	GetBets(filters models.Bet) ([]models.Bet, error)
 }
 
 // NewBetsRepo Returns an Match repository object

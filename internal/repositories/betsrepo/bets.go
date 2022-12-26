@@ -17,3 +17,9 @@ func (repo *betsRepository) GetBet(id int) (models.Bet, error) {
 	results := repo.connection.First(&bet, id)
 	return bet, results.Error
 }
+
+func (repo *betsRepository) GetBets(filters models.Bet) ([]models.Bet, error) {
+	var bets []models.Bet
+	results := repo.connection.Where(filters).Find(&bets)
+	return bets, results.Error
+}

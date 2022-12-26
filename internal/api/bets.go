@@ -13,10 +13,15 @@ import (
 )
 
 func createBet(context *gin.Context) {
-	var bet models.Bet
-	if err := context.BindJSON(&bet); err != nil {
+	var betCreateModel models.BetCreateRequest
+	if err := context.BindJSON(&betCreateModel); err != nil {
 		context.JSON(http.StatusBadRequest, helpers.GenerateError("invalid bet json", err))
 		return
+	}
+	bet := models.Bet{
+		MatchID:       *betCreateModel.MatchID,
+		HomeTeamScore: *betCreateModel.HomeTeamScore,
+		AwayTeamScore: *betCreateModel.AwayTeamScore,
 	}
 
 	if userRaw, ok := context.Get("user"); !ok {
