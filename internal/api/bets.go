@@ -6,9 +6,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 
-	"github.com/lipeavelar/soccer-bet-api/internal/repositories/betsrepo"
-	"github.com/lipeavelar/soccer-bet-api/internal/repositories/matchesrepo"
-	"github.com/lipeavelar/soccer-bet-api/internal/services/betssrv"
+	"github.com/lipeavelar/soccer-bet-api/internal/api/initializers"
 	"github.com/lipeavelar/soccer-bet-api/pkg/helpers"
 	"github.com/lipeavelar/soccer-bet-api/pkg/models"
 )
@@ -32,23 +30,15 @@ func createBet(context *gin.Context) {
 		bet.UserID = user.ID
 	}
 
-	betsRepo, err := betsrepo.NewBetsRepo()
+	betsService, err := initializers.BetsService()
 	if err != nil {
 		context.JSON(http.StatusInternalServerError, helpers.GenerateError("internal server error", err))
 		return
 	}
-	matchesRepo, err := matchesrepo.NewMatchesRepo()
-	if err != nil {
-		context.JSON(http.StatusInternalServerError, helpers.GenerateError("internal server error", err))
-		return
-	}
-	betsService := betssrv.NewBetsService(betssrv.BetRepositories{
-		Matches: matchesRepo,
-		Bets:    betsRepo,
-	})
 	createdBet, err := betsService.CreateBet(bet)
 	if err != nil {
 		context.JSON(http.StatusInternalServerError, helpers.GenerateError("internal server error", err))
+		return
 	}
 	context.JSON(http.StatusOK, createdBet)
 }

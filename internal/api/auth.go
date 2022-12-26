@@ -5,8 +5,7 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
-	"github.com/lipeavelar/soccer-bet-api/internal/repositories/authrepo"
-	"github.com/lipeavelar/soccer-bet-api/internal/services/authsrv"
+	"github.com/lipeavelar/soccer-bet-api/internal/api/initializers"
 	"github.com/lipeavelar/soccer-bet-api/pkg/helpers"
 	"github.com/lipeavelar/soccer-bet-api/pkg/models"
 )
@@ -19,12 +18,11 @@ func registerUser(context *gin.Context) {
 		return
 	}
 
-	repo, err := authrepo.NewUsersRepo()
+	userService, err := initializers.AuthService()
 	if err != nil {
 		context.JSON(http.StatusInternalServerError, helpers.GenerateError("internal server error", err))
 		return
 	}
-	userService := authsrv.NewAuthService(repo)
 	createdUser, err := userService.CreateUser(user)
 	if err != nil {
 		context.JSON(http.StatusInternalServerError, helpers.GenerateError("internal server error", err))
@@ -46,12 +44,6 @@ func updateUser(context *gin.Context) {
 		return
 	}
 
-	repo, err := authrepo.NewUsersRepo()
-	if err != nil {
-		context.JSON(http.StatusInternalServerError, helpers.GenerateError("internal server error", err))
-		return
-	}
-
 	loggedUserRaw, _ := context.Get("user")
 	loggedUser, ok := loggedUserRaw.(models.User)
 	if !ok {
@@ -59,7 +51,12 @@ func updateUser(context *gin.Context) {
 		return
 	}
 
-	userService := authsrv.NewAuthService(repo)
+	userService, err := initializers.AuthService()
+	if err != nil {
+		context.JSON(http.StatusInternalServerError, helpers.GenerateError("internal server error", err))
+		return
+	}
+
 	updatedUser, err := userService.UpdateUser(user, loggedUser)
 	if err != nil {
 		context.JSON(http.StatusInternalServerError, helpers.GenerateError("internal server error", err))
@@ -76,12 +73,11 @@ func login(context *gin.Context) {
 		return
 	}
 
-	repo, err := authrepo.NewUsersRepo()
+	userService, err := initializers.AuthService()
 	if err != nil {
 		context.JSON(http.StatusInternalServerError, helpers.GenerateError("internal server error", err))
 		return
 	}
-	userService := authsrv.NewAuthService(repo)
 	token, err := userService.CreateSession(user)
 	if err != nil {
 		context.JSON(http.StatusInternalServerError, helpers.GenerateError("internal server error", err))
