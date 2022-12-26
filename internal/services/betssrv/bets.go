@@ -17,6 +17,7 @@ type betsService struct {
 // BetsService is the service for bets
 type BetsService interface {
 	CreateBet(bet models.Bet) (models.Bet, error)
+	UpdateBet(bet models.Bet) (models.Bet, error)
 }
 
 type BetRepositories struct {

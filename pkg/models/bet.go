@@ -11,3 +11,8 @@ type Bet struct {
 	CreatedAt     time.Time
 	UpdatedAt     time.Time
 }
+
+type BetUpdateRequest struct {
+	HomeTeamScore *int `json:"homeTeamScore" binding:"required,number,gte=0"`
+	AwayTeamScore *int `json:"awayTeamScore" binding:"required,number,gte=0"`
+}

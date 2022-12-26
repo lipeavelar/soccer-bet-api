@@ -12,6 +12,8 @@ type betsRepository struct {
 
 type BetsRepo interface {
 	CreateBet(bet models.Bet) error
+	UpdateBet(bet models.Bet) error
+	GetBet(betID int) (models.Bet, error)
 }
 
 // NewBetsRepo Returns an Match repository object

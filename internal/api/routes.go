@@ -29,4 +29,5 @@ func setupMatchesRoutes(matchesGroup *gin.RouterGroup) {
 
 func setupBetsRoutes(betsGroup *gin.RouterGroup) {
 	betsGroup.POST("/", createBet)
+	betsGroup.PUT("/:id", updateBet)
 }
