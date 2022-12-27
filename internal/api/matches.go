@@ -22,7 +22,8 @@ func initializeMatches(context *gin.Context) {
 		context.JSON(http.StatusInternalServerError, helpers.GenerateError("internal server error", err))
 		return
 	}
-	if err := matchService.InitializeMatches(currentSeason); err != nil {
+	matches, err := matchService.InitializeMatches(currentSeason)
+	if err != nil {
 		context.JSON(http.StatusInternalServerError, helpers.GenerateError("internal server error", err))
 		return
 	}
@@ -36,8 +37,9 @@ func initializeMatches(context *gin.Context) {
 		context.JSON(http.StatusInternalServerError, helpers.GenerateError("internal server error", err))
 		return
 	}
-	context.JSON(http.StatusOK, map[string]string{
-		"result": "Matches initialized with success",
+	context.JSON(http.StatusOK, map[string]interface{}{
+		"result":  "Matches initialized with success",
+		"matches": matches,
 	})
 }
 
@@ -47,11 +49,13 @@ func updateMatches(context *gin.Context) {
 		context.JSON(http.StatusInternalServerError, helpers.GenerateError("internal server error", err))
 		return
 	}
-	if err := matchService.UpdateMatches(); err != nil {
+	updatedMatches, err := matchService.UpdateMatches()
+	if err != nil {
 		context.JSON(http.StatusInternalServerError, helpers.GenerateError("internal server error", err))
 		return
 	}
-	context.JSON(http.StatusOK, map[string]string{
-		"result": "Matches updated with success",
+	context.JSON(http.StatusOK, map[string]interface{}{
+		"result":  "Matches updated with success",
+		"matches": updatedMatches,
 	})
 }

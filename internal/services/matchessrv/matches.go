@@ -16,8 +16,8 @@ type matchesService struct {
 
 // MatchesService is the service for matches
 type MatchesService interface {
-	InitializeMatches(season int) error
-	UpdateMatches() error
+	InitializeMatches(season int) ([]models.Match, error)
+	UpdateMatches() ([]models.Match, error)
 	getMatchesFromAPI(seasonYear int) ([]models.MatchResponse, error)
 }
 

@@ -11,7 +11,7 @@ func UpdateMatches() error {
 		return err
 	}
 	matchService := matchessrv.NewMatchesService(repo)
-	if err := matchService.UpdateMatches(); err != nil {
+	if _, err := matchService.UpdateMatches(); err != nil {
 		return err
 	}
 	return nil

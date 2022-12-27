@@ -11,8 +11,8 @@ type betsRepository struct {
 }
 
 type BetsRepo interface {
-	CreateBet(bet models.Bet) error
-	UpdateBet(bet models.Bet) error
+	CreateBet(bet models.Bet) (models.Bet, error)
+	UpdateBet(bet models.Bet) (models.Bet, error)
 	GetBet(betID int) (models.Bet, error)
 	GetBets(filters models.Bet) ([]models.Bet, error)
 }

@@ -4,10 +4,10 @@ import (
 	"github.com/lipeavelar/soccer-bet-api/pkg/models"
 )
 
-func (srv *matchesService) InitializeMatches(currentSeason int) error {
+func (srv *matchesService) InitializeMatches(currentSeason int) ([]models.Match, error) {
 	matchesRes, err := srv.getMatchesFromAPI(currentSeason)
 	if err != nil {
-		return err
+		return []models.Match{}, err
 	}
 
 	matches := make([]models.Match, len(matchesRes))
@@ -15,7 +15,7 @@ func (srv *matchesService) InitializeMatches(currentSeason int) error {
 	for i, matchRes := range matchesRes {
 		matchDay, err := getMatchLocalDate(matchRes.Date)
 		if err != nil {
-			return err
+			return []models.Match{}, err
 		}
 		matches[i] = models.Match{
 			APIMatchID:    matchRes.ID,

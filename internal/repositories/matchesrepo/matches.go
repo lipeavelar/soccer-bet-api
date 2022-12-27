@@ -2,9 +2,12 @@ package matchesrepo
 
 import "github.com/lipeavelar/soccer-bet-api/pkg/models"
 
-func (repo *matchesRepository) SaveMatches(matches []models.Match) error {
+func (repo *matchesRepository) SaveMatches(matches []models.Match) ([]models.Match, error) {
+	if len(matches) <= 0 {
+		return matches, nil
+	}
 	results := repo.connection.Save(&matches)
-	return results.Error
+	return matches, results.Error
 }
 
 func (repo *matchesRepository) GetMatch(id int) (models.Match, error) {

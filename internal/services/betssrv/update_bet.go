@@ -10,9 +10,9 @@ func (srv *betsService) UpdateBet(bet models.Bet) (models.Bet, error) {
 	if err := srv.checkMatchIsBetable(oldBet.MatchID); err != nil {
 		return models.Bet{}, err
 	}
-	err = srv.repositories.Bets.UpdateBet(bet)
+	updatedBet, err := srv.repositories.Bets.UpdateBet(bet)
 	if err != nil {
 		return models.Bet{}, err
 	}
-	return bet, nil
+	return updatedBet, nil
 }

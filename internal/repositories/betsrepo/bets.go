@@ -2,14 +2,14 @@ package betsrepo
 
 import "github.com/lipeavelar/soccer-bet-api/pkg/models"
 
-func (repo *betsRepository) CreateBet(bet models.Bet) error {
+func (repo *betsRepository) CreateBet(bet models.Bet) (models.Bet, error) {
 	results := repo.connection.Create(&bet)
-	return results.Error
+	return bet, results.Error
 }
 
-func (repo *betsRepository) UpdateBet(bet models.Bet) error {
+func (repo *betsRepository) UpdateBet(bet models.Bet) (models.Bet, error) {
 	results := repo.connection.Model(&bet).Select("HomeTeamScore", "AwayTeamScore").Updates(&bet)
-	return results.Error
+	return bet, results.Error
 }
 
 func (repo *betsRepository) GetBet(id int) (models.Bet, error) {

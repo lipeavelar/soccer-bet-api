@@ -11,7 +11,7 @@ type matchesRepository struct {
 }
 
 type MatchesRepo interface {
-	SaveMatches(matches []models.Match) error
+	SaveMatches(matches []models.Match) ([]models.Match, error)
 	GetMatches(filters models.Match) ([]models.Match, error)
 	GetMatch(id int) (models.Match, error)
 	GetCurrentSeason() (int, error)
