@@ -6,11 +6,11 @@ import (
 )
 
 func (srv *matchesService) UpdateMatches() error {
-	matchesRes, err := srv.getMatchesFromAPI()
+	currentSeason, err := srv.repository.GetCurrentSeason()
 	if err != nil {
 		return err
 	}
-	currentSeason, err := srv.repository.GetCurrentSeason()
+	matchesRes, err := srv.getMatchesFromAPI(currentSeason)
 	if err != nil {
 		return err
 	}

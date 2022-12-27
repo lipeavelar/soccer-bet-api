@@ -5,7 +5,7 @@ import (
 )
 
 func (srv *matchesService) InitializeMatches(currentSeason int) error {
-	matchesRes, err := srv.getMatchesFromAPI()
+	matchesRes, err := srv.getMatchesFromAPI(currentSeason)
 	if err != nil {
 		return err
 	}

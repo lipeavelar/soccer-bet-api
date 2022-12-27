@@ -2,6 +2,7 @@ package matchessrv
 
 import (
 	"encoding/json"
+	"fmt"
 	"time"
 
 	"github.com/lipeavelar/soccer-bet-api/internal/repositories/matchesrepo"
@@ -17,7 +18,7 @@ type matchesService struct {
 type MatchesService interface {
 	InitializeMatches(season int) error
 	UpdateMatches() error
-	getMatchesFromAPI() ([]models.MatchResponse, error)
+	getMatchesFromAPI(seasonYear int) ([]models.MatchResponse, error)
 }
 
 // NewMatchesService returns a new MatchesService
@@ -27,8 +28,8 @@ func NewMatchesService(repo matchesrepo.MatchesRepo) MatchesService {
 	}
 }
 
-func (srv *matchesService) getMatchesFromAPI() ([]models.MatchResponse, error) {
-	matchesJSON, err := helpers.FootballAPIRequest("matches")
+func (srv *matchesService) getMatchesFromAPI(seasonYear int) ([]models.MatchResponse, error) {
+	matchesJSON, err := helpers.FootballAPIRequest(fmt.Sprintf("matches/?season=%d", seasonYear))
 	if err != nil {
 		return nil, err
 	}
