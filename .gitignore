@@ -3,3 +3,5 @@
 tmp/
 database/.data
 vendor/
+
+logs

@@ -25,6 +25,7 @@ services:
       - .env
     volumes:
       - .:/app:rw,delegated
+      - /app/logs
     ports:
       - 8000:${API_PORT}
       - 2345:2345

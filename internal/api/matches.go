@@ -12,29 +12,29 @@ import (
 func initializeMatches(context *gin.Context) {
 	currentSeason, err := strconv.Atoi(context.Param("season"))
 	if err != nil {
-		context.JSON(http.StatusBadRequest, helpers.GenerateError("invalid season value", err))
+		context.JSON(http.StatusBadRequest, helpers.GenerateError("invalid season value", err, gin.DefaultErrorWriter))
 		return
 	}
 
 	// Initialize matches season
 	matchService, err := initializers.MatchesService()
 	if err != nil {
-		context.JSON(http.StatusInternalServerError, helpers.GenerateError("internal server error", err))
+		context.JSON(http.StatusInternalServerError, helpers.GenerateError("internal server error", err, gin.DefaultErrorWriter))
 		return
 	}
 	matches, err := matchService.InitializeMatches(currentSeason)
 	if err != nil {
-		context.JSON(http.StatusInternalServerError, helpers.GenerateError("internal server error", err))
+		context.JSON(http.StatusInternalServerError, helpers.GenerateError("internal server error", err, gin.DefaultErrorWriter))
 		return
 	}
 
 	teamsService, err := initializers.TeamsService()
 	if err != nil {
-		context.JSON(http.StatusInternalServerError, helpers.GenerateError("internal server error", err))
+		context.JSON(http.StatusInternalServerError, helpers.GenerateError("internal server error", err, gin.DefaultErrorWriter))
 		return
 	}
 	if err := teamsService.CreateTeams(); err != nil {
-		context.JSON(http.StatusInternalServerError, helpers.GenerateError("internal server error", err))
+		context.JSON(http.StatusInternalServerError, helpers.GenerateError("internal server error", err, gin.DefaultErrorWriter))
 		return
 	}
 	context.JSON(http.StatusOK, map[string]interface{}{
@@ -46,12 +46,12 @@ func initializeMatches(context *gin.Context) {
 func updateMatches(context *gin.Context) {
 	matchService, err := initializers.MatchesService()
 	if err != nil {
-		context.JSON(http.StatusInternalServerError, helpers.GenerateError("internal server error", err))
+		context.JSON(http.StatusInternalServerError, helpers.GenerateError("internal server error", err, gin.DefaultErrorWriter))
 		return
 	}
 	updatedMatches, err := matchService.UpdateMatches()
 	if err != nil {
-		context.JSON(http.StatusInternalServerError, helpers.GenerateError("internal server error", err))
+		context.JSON(http.StatusInternalServerError, helpers.GenerateError("internal server error", err, gin.DefaultErrorWriter))
 		return
 	}
 	context.JSON(http.StatusOK, map[string]interface{}{

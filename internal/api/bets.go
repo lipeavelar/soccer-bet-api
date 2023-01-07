@@ -15,7 +15,7 @@ import (
 func createBet(context *gin.Context) {
 	var betCreateModel models.BetCreateRequest
 	if err := context.BindJSON(&betCreateModel); err != nil {
-		context.JSON(http.StatusBadRequest, helpers.GenerateError("invalid bet json", err))
+		context.JSON(http.StatusBadRequest, helpers.GenerateError("invalid bet json", err, gin.DefaultErrorWriter))
 		return
 	}
 	bet := models.Bet{
@@ -25,12 +25,12 @@ func createBet(context *gin.Context) {
 	}
 
 	if userRaw, ok := context.Get("user"); !ok {
-		context.JSON(http.StatusBadRequest, helpers.GenerateError("missing user information", errors.New("missing user information")))
+		context.JSON(http.StatusBadRequest, helpers.GenerateError("missing user information", errors.New("missing user information"), gin.DefaultErrorWriter))
 		return
 	} else {
 		user, ok := userRaw.(models.User)
 		if !ok {
-			context.JSON(http.StatusBadRequest, helpers.GenerateError("invalid user", errors.New("invalid user")))
+			context.JSON(http.StatusBadRequest, helpers.GenerateError("invalid user", errors.New("invalid user"), gin.DefaultErrorWriter))
 			return
 		}
 		bet.UserID = user.ID
@@ -38,12 +38,12 @@ func createBet(context *gin.Context) {
 
 	betsService, err := initializers.BetsService()
 	if err != nil {
-		context.JSON(http.StatusInternalServerError, helpers.GenerateError("internal server error", err))
+		context.JSON(http.StatusInternalServerError, helpers.GenerateError("internal server error", err, gin.DefaultErrorWriter))
 		return
 	}
 	createdBet, err := betsService.CreateBet(bet)
 	if err != nil {
-		context.JSON(http.StatusInternalServerError, helpers.GenerateError("internal server error", err))
+		context.JSON(http.StatusInternalServerError, helpers.GenerateError("internal server error", err, gin.DefaultErrorWriter))
 		return
 	}
 	context.JSON(http.StatusOK, createdBet)
@@ -52,12 +52,12 @@ func createBet(context *gin.Context) {
 func updateBet(context *gin.Context) {
 	betID, err := strconv.Atoi(context.Param("id"))
 	if err != nil {
-		context.JSON(http.StatusBadRequest, helpers.GenerateError("invalid bet id", err))
+		context.JSON(http.StatusBadRequest, helpers.GenerateError("invalid bet id", err, gin.DefaultErrorWriter))
 		return
 	}
 	var bet models.BetUpdateRequest
 	if err := context.BindJSON(&bet); err != nil {
-		context.JSON(http.StatusBadRequest, helpers.GenerateError("invalid bet json", err))
+		context.JSON(http.StatusBadRequest, helpers.GenerateError("invalid bet json", err, gin.DefaultErrorWriter))
 		return
 	}
 	updateBet := models.Bet{
@@ -68,12 +68,12 @@ func updateBet(context *gin.Context) {
 
 	betsService, err := initializers.BetsService()
 	if err != nil {
-		context.JSON(http.StatusInternalServerError, helpers.GenerateError("internal server error", err))
+		context.JSON(http.StatusInternalServerError, helpers.GenerateError("internal server error", err, gin.DefaultErrorWriter))
 		return
 	}
 	updatedBet, err := betsService.UpdateBet(updateBet)
 	if err != nil {
-		context.JSON(http.StatusInternalServerError, helpers.GenerateError("internal server error", err))
+		context.JSON(http.StatusInternalServerError, helpers.GenerateError("internal server error", err, gin.DefaultErrorWriter))
 		return
 	}
 	context.JSON(http.StatusOK, updatedBet)

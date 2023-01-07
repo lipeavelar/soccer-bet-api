@@ -1,14 +1,16 @@
 package helpers
 
-import "fmt"
+import (
+	"fmt"
+	"io"
+)
 
 type ErrorInfo struct {
 	Message string `json:"message"`
 }
 
-func GenerateError(message string, err error) ErrorInfo {
-	// TODO: Add log here
-	fmt.Printf("-------ERROR-------\n\nmessage:%s\n\nerror:%v\n-------------------", err.Error(), err)
+func GenerateError(message string, err error, logger io.Writer) ErrorInfo {
+	logger.Write([]byte(fmt.Sprintf("%s\n", err.Error())))
 	return ErrorInfo{
 		Message: message,
 	}
